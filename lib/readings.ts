@@ -12,6 +12,7 @@ function toReading(run: TestRun): BatteryReading {
     recoveryTime: run.recovery_time ?? 0,
     teamNumber: run.team_number ?? 0,
     batteryLabel: run.battery_label ?? "",
+    batteryModel: run.battery_model ?? "",
     healthScore: run.health_score ?? 0,
     recordedAt: run.created_at ?? "",
   };

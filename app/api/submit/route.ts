@@ -8,7 +8,7 @@ function parsePayload(body: unknown): SubmitPayload | null {
 
   const {
     resistance, avgTemp, voltageSag, capacity, recoveryTime,
-    teamNumber, batteryLabel,
+    teamNumber, batteryLabel, batteryModel,
   } = body as Record<string, unknown>;
 
   const parsed = {
@@ -19,6 +19,7 @@ function parsePayload(body: unknown): SubmitPayload | null {
     recoveryTime: Number(recoveryTime),
     teamNumber: Number(teamNumber),
     batteryLabel: String(batteryLabel ?? "").trim(),
+    batteryModel: String(batteryModel ?? "").trim(),
   };
 
   if (
@@ -64,6 +65,7 @@ export async function POST(req: Request) {
         recovery_time: payload.recoveryTime,
         team_number: payload.teamNumber,
         battery_label: payload.batteryLabel,
+        battery_model: payload.batteryModel,
         health_score: healthScore,
       })
       .select()
@@ -88,6 +90,7 @@ export async function POST(req: Request) {
         recoveryTime: run.recovery_time,
         teamNumber: run.team_number,
         batteryLabel: run.battery_label,
+        batteryModel: run.battery_model,
         healthScore: run.health_score,
         recordedAt: run.created_at,
       },

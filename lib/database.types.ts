@@ -11,6 +11,7 @@ export interface Database {
           recovery_time: number;
           team_number: number;
           battery_label: string;
+          battery_model: string;
           health_score: number;
           created_at: string | null;
         };
@@ -23,6 +24,7 @@ export interface Database {
           recovery_time: number;
           team_number: number;
           battery_label: string;
+          battery_model: string;
           health_score: number;
           created_at?: string | null;
         };
@@ -35,6 +37,7 @@ export interface Database {
           recovery_time?: number;
           team_number?: number;
           battery_label?: string;
+          battery_model?: string;
           health_score?: number;
           created_at?: string | null;
         };

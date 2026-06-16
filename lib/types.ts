@@ -6,6 +6,7 @@ export interface SubmitPayload {
   recoveryTime: number;
   teamNumber: number;
   batteryLabel: string;
+  batteryModel: string;
 }
 
 export interface TestRun {
@@ -17,6 +18,7 @@ export interface TestRun {
   recovery_time: number;
   team_number: number;
   battery_label: string;
+  battery_model: string;
   health_score: number;
   created_at?: string;
 }
@@ -31,6 +33,7 @@ export interface BatteryReading {
   recoveryTime: number;
   teamNumber: number;
   batteryLabel: string;
+  batteryModel: string;
   healthScore: number;
   recordedAt: string;
 }
