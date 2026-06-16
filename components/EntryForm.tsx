@@ -1,8 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { encodeBatteryHealth } from "@/lib/encoding";
+
+const STORAGE_KEY = "battery_team_number";
 
 const EMPTY_FORM = {
   resistance: "",
@@ -41,10 +43,17 @@ function isValidPayload(payload: ReturnType<typeof parseForm>) {
 
 export default function EntryForm() {
   const router = useRouter();
-  const [form, setForm] = useState(EMPTY_FORM);
+  const [form, setForm] = useState(() => {
+    const saved = typeof window !== "undefined" ? localStorage.getItem(STORAGE_KEY) : null;
+    return saved ? { ...EMPTY_FORM, teamNumber: saved } : EMPTY_FORM;
+  });
   const [saving, setSaving] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, form.teamNumber);
+  }, [form.teamNumber]);
 
   const payload = (() => {
     const parsed = parseForm(form);
@@ -77,7 +86,7 @@ export default function EntryForm() {
       }
 
       setSuccessMessage("Reading saved");
-      setForm(EMPTY_FORM);
+      setForm((prev) => ({ ...EMPTY_FORM, teamNumber: prev.teamNumber }));
       router.refresh();
     } catch {
       setErrorMessage("Network error — check your connection");

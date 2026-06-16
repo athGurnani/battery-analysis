@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import TeamBadge from "@/components/TeamBadge";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -34,6 +35,7 @@ export default function RootLayout({
               B
             </div>
             <span className="font-semibold text-zinc-100">FTC Battery Analysis</span>
+            <TeamBadge />
           </div>
         </nav>
         <main className="flex-1">{children}</main>
