@@ -100,7 +100,7 @@ export default function EntryForm() {
                 return;
             }
 
-            setSuccessMessage("Reading saved");
+            setSuccessMessage("Reading saved ✓");
             setForm(EMPTY_FORM);
             router.refresh();
         } catch {

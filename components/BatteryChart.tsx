@@ -31,8 +31,10 @@ function healthColor(score: number) {
 
 export default function BatteryChart({
   readings,
+  lastUpdated,
 }: {
   readings: BatteryReading[];
+  lastUpdated: Date;
 }) {
   if (readings.length === 0) {
     return (
@@ -58,101 +60,111 @@ export default function BatteryChart({
   const textColor = "#52525b";
 
   return (
-    <div className="grid gap-4 sm:grid-cols-2">
-      <div className="rounded-lg border border-zinc-800/50 bg-[#0c0c14] p-4">
-        <h3 className="mb-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-amber-600/70">
-          Health Score
-        </h3>
-        <ResponsiveContainer width="100%" height={240}>
-          <LineChart data={chartData} margin={{ top: 4, right: 12, left: -8, bottom: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
-            <XAxis dataKey="label" tick={{ fontSize: 10, fill: textColor }} />
-            <YAxis domain={[0, 100]} tick={{ fontSize: 10, fill: textColor }} />
-            <Tooltip
-              contentStyle={{
-                borderRadius: 6,
-                border: "1px solid #27272a",
-                backgroundColor: "#0f0f14",
-                fontSize: 12,
-                color: "#f4f4f0",
-              }}
-            />
-            <Line
-              type="monotone"
-              dataKey="healthScore"
-              name="Health Score"
-              stroke="#f59e0b"
-              strokeWidth={2}
-              dot={(props) => {
-                const { cx, cy, payload } = props;
-                return (
-                  <circle
-                    cx={cx}
-                    cy={cy}
-                    r={4}
-                    fill={healthColor(payload.healthScore)}
-                    stroke="#0c0c14"
-                    strokeWidth={2}
-                  />
-                );
-              }}
-            />
-          </LineChart>
-        </ResponsiveContainer>
+    <div>
+      <div className="mb-2 flex items-center justify-between">
+        <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-amber-600/70">
+          Charts
+        </span>
+        <span className="text-[10px] text-zinc-600">
+          Last updated: {lastUpdated.toLocaleTimeString()}
+        </span>
       </div>
+      <div className="grid gap-4 sm:grid-cols-2">
+        <div className="rounded-lg border border-zinc-800/50 bg-[#0c0c14] p-4">
+          <h3 className="mb-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-amber-600/70">
+            Health Score
+          </h3>
+          <ResponsiveContainer width="100%" height={240}>
+            <LineChart data={chartData} margin={{ top: 4, right: 12, left: -8, bottom: 0 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
+              <XAxis dataKey="label" tick={{ fontSize: 10, fill: textColor }} />
+              <YAxis domain={[0, 100]} tick={{ fontSize: 10, fill: textColor }} />
+              <Tooltip
+                contentStyle={{
+                  borderRadius: 6,
+                  border: "1px solid #27272a",
+                  backgroundColor: "#0f0f14",
+                  fontSize: 12,
+                  color: "#f4f4f0",
+                }}
+              />
+              <Line
+                type="monotone"
+                dataKey="healthScore"
+                name="Health Score"
+                stroke="#f59e0b"
+                strokeWidth={2}
+                dot={(props) => {
+                  const { cx, cy, payload } = props;
+                  return (
+                    <circle
+                      cx={cx}
+                      cy={cy}
+                      r={4}
+                      fill={healthColor(payload.healthScore)}
+                      stroke="#0c0c14"
+                      strokeWidth={2}
+                    />
+                  );
+                }}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
 
-      <div className="rounded-lg border border-zinc-800/50 bg-[#0c0c14] p-4">
-        <h3 className="mb-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-amber-600/70">
-          Sag, Resistance &amp; Capacity
-        </h3>
-        <ResponsiveContainer width="100%" height={240}>
-          <LineChart data={chartData} margin={{ top: 4, right: 12, left: -8, bottom: 0 }}>
-            <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
-            <XAxis dataKey="label" tick={{ fontSize: 10, fill: textColor }} />
-            <YAxis yAxisId="left" tick={{ fontSize: 10, fill: textColor }} />
-            <YAxis yAxisId="right" orientation="right" tick={{ fontSize: 10, fill: textColor }} />
-            <Tooltip
-              contentStyle={{
-                borderRadius: 6,
-                border: "1px solid #27272a",
-                backgroundColor: "#0f0f14",
-                fontSize: 12,
-                color: "#f4f4f0",
-              }}
-            />
-            <Legend
-              wrapperStyle={{ fontSize: 11, color: textColor }}
-              iconSize={8}
-            />
-            <Line
-              yAxisId="left"
-              type="monotone"
-              dataKey="voltageSag"
-              name="Sag (V)"
-              stroke="#a78bfa"
-              strokeWidth={2}
-              dot={{ r: 2, fill: "#a78bfa", stroke: "#0c0c14", strokeWidth: 1.5 }}
-            />
-            <Line
-              yAxisId="right"
-              type="monotone"
-              dataKey="resistance"
-              name="Resistance (mΩ)"
-              stroke="#f97316"
-              strokeWidth={2}
-              dot={{ r: 2, fill: "#f97316", stroke: "#0c0c14", strokeWidth: 1.5 }}
-            />
-            <Line
-              yAxisId="left"
-              type="monotone"
-              dataKey="capacity"
-              name="Capacity (Ah)"
-              stroke="#34d399"
-              strokeWidth={2}
-              dot={{ r: 2, fill: "#34d399", stroke: "#0c0c14", strokeWidth: 1.5 }}
-            />
-          </LineChart>
-        </ResponsiveContainer>
+        <div className="rounded-lg border border-zinc-800/50 bg-[#0c0c14] p-4">
+          <h3 className="mb-3 text-[11px] font-semibold uppercase tracking-[0.12em] text-amber-600/70">
+            Sag, Resistance &amp; Capacity
+          </h3>
+          <ResponsiveContainer width="100%" height={240}>
+            <LineChart data={chartData} margin={{ top: 4, right: 12, left: -8, bottom: 0 }}>
+              <CartesianGrid strokeDasharray="3 3" stroke={gridColor} />
+              <XAxis dataKey="label" tick={{ fontSize: 10, fill: textColor }} />
+              <YAxis yAxisId="left" tick={{ fontSize: 10, fill: textColor }} />
+              <YAxis yAxisId="right" orientation="right" tick={{ fontSize: 10, fill: textColor }} />
+              <Tooltip
+                contentStyle={{
+                  borderRadius: 6,
+                  border: "1px solid #27272a",
+                  backgroundColor: "#0f0f14",
+                  fontSize: 12,
+                  color: "#f4f4f0",
+                }}
+              />
+              <Legend
+                wrapperStyle={{ fontSize: 11, color: textColor }}
+                iconSize={8}
+              />
+              <Line
+                yAxisId="left"
+                type="monotone"
+                dataKey="voltageSag"
+                name="Sag (V)"
+                stroke="#a78bfa"
+                strokeWidth={2}
+                dot={{ r: 2, fill: "#a78bfa", stroke: "#0c0c14", strokeWidth: 1.5 }}
+              />
+              <Line
+                yAxisId="right"
+                type="monotone"
+                dataKey="resistance"
+                name="Resistance (mΩ)"
+                stroke="#f97316"
+                strokeWidth={2}
+                dot={{ r: 2, fill: "#f97316", stroke: "#0c0c14", strokeWidth: 1.5 }}
+              />
+              <Line
+                yAxisId="left"
+                type="monotone"
+                dataKey="capacity"
+                name="Capacity (Ah)"
+                stroke="#34d399"
+                strokeWidth={2}
+                dot={{ r: 2, fill: "#34d399", stroke: "#0c0c14", strokeWidth: 1.5 }}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
       </div>
     </div>
   );

@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "FTC Pit Telemetry",
+  title: "Atlas",
   description: "Battery scouting dashboard for FTC competition teams",
 };
 
@@ -49,11 +49,11 @@ export default function RootLayout({
                 className="fill-amber-400 text-[14px] font-bold"
                 fontFamily="Geist, system-ui, sans-serif"
               >
-                FTC
+                A
               </text>
             </svg>
             <span className="text-sm font-semibold uppercase tracking-[0.15em] text-zinc-200">
-              Pit Telemetry
+              Atlas
             </span>
             <div className="ml-auto flex items-center gap-2">
               <span className="hidden h-4 w-px bg-zinc-800 sm:block" />
